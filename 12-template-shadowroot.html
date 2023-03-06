@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>12 - Template with shadow root</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="/">Home</a>
+    </nav>
+    <main>
+      <h1>12 - Template with shadow root</h1>
+
+      <template id="tmpl">
+        <style>
+          p {
+            font-weight: bold;
+          }
+        </style>
+        <p id="message"></p>
+      </template>
+
+      <div id="elem">Click me</div>
+
+      <script>
+        elem.onclick = function () {
+          elem.attachShadow({ mode: 'open' });
+
+          elem.shadowRoot.append(tmpl.content.cloneNode(true));
+
+          elem.shadowRoot.getElementById('message').innerHTML =
+            '¡Hola desde las sombras!';
+        };
+      </script>
+    </main>
+  </body>
+</html>
