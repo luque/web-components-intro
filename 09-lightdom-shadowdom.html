@@ -9,21 +9,25 @@
     <script>
       class LightGreeter extends HTMLElement {
         connectedCallback() {
-          this.innerHTML = `<span>¡Hola ${this.getAttribute('name')}!</span>`;
+          this.innerHTML = `<span>¡Hola, ${this.getAttribute('name')}!</span>`;
         }
       }
 
       class OpenShadowGreeter extends HTMLElement {
         connectedCallback() {
           const shadow = this.attachShadow({ mode: 'open' });
-          shadow.innerHTML = `<span>¡Hola ${this.getAttribute('name')}!</span>`;
+          shadow.innerHTML = `<span>¡Hola, ${this.getAttribute(
+            'name'
+          )}!</span>`;
         }
       }
 
       class ClosedShadowGreeter extends HTMLElement {
         connectedCallback() {
           const shadow = this.attachShadow({ mode: 'closed' });
-          shadow.innerHTML = `<span>¡Hola ${this.getAttribute('name')}!</span>`;
+          shadow.innerHTML = `<span>¡Hola, ${this.getAttribute(
+            'name'
+          )}!</span>`;
         }
       }
 

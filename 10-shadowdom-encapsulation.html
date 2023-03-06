@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>10 - Shadow DOM Encapsulation</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="styles.css" />
+
+    <style>
+      /* document style won't apply to the shadow tree inside #elem */
+      p {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="/">Home</a>
+    </nav>
+    <main>
+      <h1>10 - Shadow DOM Encapsulation</h1>
+
+      <div id="elem"></div>
+
+      <script>
+        elem.attachShadow({ mode: 'open' });
+
+        elem.shadowRoot.innerHTML = `
+<style> p { font-weight: bold; } </style>
+<p>¡Hola, OSOCO!</p>
+`;
+
+        // <p> is only visible from queries inside the shadow tree
+        console.log(
+          '<p> es visible desde light DOM?:',
+          document.querySelectorAll('p').length > 0
+        ); // false
+        console.log(
+          '<p> es visible desde el shadow root?:',
+          elem.shadowRoot.querySelectorAll('p').length > 0
+        ); // true
+      </script>
+    </main>
+  </body>
+</html>
