@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>09 - Light DOM vs Shadow DOM</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="styles.css" />
+
+    <script>
+      class LightGreeter extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `<span>¡Hola ${this.getAttribute('name')}!</span>`;
+        }
+      }
+
+      class OpenShadowGreeter extends HTMLElement {
+        connectedCallback() {
+          const shadow = this.attachShadow({ mode: 'open' });
+          shadow.innerHTML = `<span>¡Hola ${this.getAttribute('name')}!</span>`;
+        }
+      }
+
+      class ClosedShadowGreeter extends HTMLElement {
+        connectedCallback() {
+          const shadow = this.attachShadow({ mode: 'closed' });
+          shadow.innerHTML = `<span>¡Hola ${this.getAttribute('name')}!</span>`;
+        }
+      }
+
+      customElements.define('open-shadow-greeter', OpenShadowGreeter);
+      customElements.define('closed-shadow-greeter', ClosedShadowGreeter);
+      customElements.define('light-greeter', LightGreeter);
+    </script>
+  </head>
+  <body>
+    <nav>
+      <a href="/">Home</a>
+    </nav>
+    <main>
+      <h1>09 - Light DOM vs Shadow DOM</h1>
+
+      <p>Light DOM component: <light-greeter name="OSOCO"></light-greeter></p>
+
+      <p>
+        (Closed) Shadow DOM component:
+        <closed-shadow-greeter name="OSOCO"></closed-shadow-greeter>
+      </p>
+
+      <p>
+        (Open) Shadow DOM component:
+        <open-shadow-greeter name="OSOCO"></open-shadow-greeter>
+      </p>
+    </main>
+  </body>
+</html>
