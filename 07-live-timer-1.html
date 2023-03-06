@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>02 - Time Formatted</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="time-formatted.js"></script>
+
+    <script>
+      class LiveTimer extends HTMLElement {
+        connectedCallback() {
+          if (!this.rendered) {
+            this.render();
+            this.rendered = true;
+          }
+          this.timer = setInterval(() => this.tick(), 1000);
+        }
+
+        disconnectedCallback() {
+          clearInterval(this.timer); // permite GC del componente
+        }
+
+        render() {
+          this.innerHTML =
+            '<time-formatted hour="numeric" minute="numeric" second="numeric"></time-formatted>';
+
+          this.timerElem = this.firstElementChild;
+        }
+
+        tick() {
+          this.date = new Date();
+          this.timerElem.setAttribute('datetime', this.date);
+          this.dispatchEvent(new CustomEvent('tick', { detail: this.date }));
+        }
+      }
+
+      customElements.define('live-timer', LiveTimer);
+    </script>
+  </head>
+  <body>
+    <nav>
+      <a href="/">Home</a>
+    </nav>
+    <main>
+      <h1>07 - Live timer (implementado con composición)</h1>
+
+      <p>
+        <live-timer id="timer"></live-timer>
+      </p>
+    </main>
+    <script>
+      timer.addEventListener('tick', (event) =>
+        console.log('Tick event:', event.detail)
+      );
+    </script>
+  </body>
+</html>

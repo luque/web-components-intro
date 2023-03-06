@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>05 - Rendering ordering</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="styles.css" />
+
+    <script>
+      customElements.define(
+        'user-info',
+        class extends HTMLElement {
+          connectedCallback() {
+            alert('user-info contents ->' + this.innerHTML); // empty (*)
+          }
+        }
+      );
+    </script>
+  </head>
+  <body>
+    <nav>
+      <a href="/">Home</a>
+    </nav>
+    <main>
+      <h1>05 - Rendering ordering</h1>
+
+      <user-info>Contents</user-info>
+    </main>
+  </body>
+</html>

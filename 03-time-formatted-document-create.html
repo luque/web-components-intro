@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>02 - Time Formatted</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="styles.css" />
+
+    <script>
+      class TimeFormatted extends HTMLElement {
+        connectedCallback() {
+          let date = new Date(this.getAttribute('datetime') || Date.now());
+
+          this.innerHTML = new Intl.DateTimeFormat('default', {
+            year: this.getAttribute('year') || undefined,
+            month: this.getAttribute('month') || undefined,
+            day: this.getAttribute('day') || undefined,
+            hour: this.getAttribute('hour') || undefined,
+            minute: this.getAttribute('minute') || undefined,
+            second: this.getAttribute('second') || undefined,
+            timeZoneName: this.getAttribute('time-zone-name') || undefined,
+          }).format(date);
+        }
+      }
+
+      // let the browser know that <my-element> is served by our new class
+      customElements.define('time-formatted', TimeFormatted);
+    </script>
+  </head>
+  <body>
+    <nav>
+      <a href="/">Home</a>
+    </nav>
+    <main>
+      <h1>03 - time-formatted created by document.create()</h1>
+
+      <p id="container"></p>
+    </main>
+
+    <script>
+      const component = document.createElement('time-formatted');
+      component.setAttribute('year', 'numeric');
+      component.setAttribute('month', 'long');
+      component.setAttribute('day', 'numeric');
+      container.appendChild(component);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>06 - Confirm button</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="styles.css" />
+
+    <script>
+      class ConfirmButton extends HTMLButtonElement {
+        constructor() {
+          super();
+        }
+
+        connectedCallback() {
+          this.addEventListener('click', () => {
+            const isOK = confirm('Are you sure?');
+            console.log('isOK -> ', isOK);
+          });
+        }
+      }
+
+      customElements.define('confirm-button', ConfirmButton, {
+        extends: 'button',
+      });
+    </script>
+  </head>
+  <body>
+    <nav>
+      <a href="/">Home</a>
+    </nav>
+    <main>
+      <h1>06 - Confirm Button</h1>
+
+      <p><button>I'm a built-in button</button></p>
+
+      <p><button is="confirm-button">I'm a confirm button</button></p>
+
+      <p>
+        <button is="confirm-button" disabled>
+          I'm a confirm button, but disabled
+        </button>
+      </p>
+    </main>
+  </body>
+</html>

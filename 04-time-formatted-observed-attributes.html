@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>04 - Time Formatted with observed attributes</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="styles.css" />
+
+    <script>
+      class TimeFormatted extends HTMLElement {
+        connectedCallback() {
+          if (!this.rendered) {
+            this.render();
+            this.rendered = true;
+          }
+        }
+
+        static get observedAttributes() {
+          return [
+            'datetime',
+            'year',
+            'month',
+            'day',
+            'hour',
+            'minute',
+            'second',
+            'time-zone-name',
+          ];
+        }
+
+        attributeChangedCallback(name, oldValue, newValue) {
+          this.render();
+        }
+
+        render() {
+          let date = new Date(this.getAttribute('datetime') || Date.now());
+
+          this.innerHTML = new Intl.DateTimeFormat('default', {
+            year: this.getAttribute('year') || undefined,
+            month: this.getAttribute('month') || undefined,
+            day: this.getAttribute('day') || undefined,
+            hour: this.getAttribute('hour') || undefined,
+            minute: this.getAttribute('minute') || undefined,
+            second: this.getAttribute('second') || undefined,
+            timeZoneName: this.getAttribute('time-zone-name') || undefined,
+          }).format(date);
+        }
+      }
+
+      // let the browser know that <my-element> is served by our new class
+      customElements.define('time-formatted', TimeFormatted);
+    </script>
+  </head>
+  <body>
+    <nav>
+      <a href="/">Home</a>
+    </nav>
+    <main>
+      <h1>04 - time-formatted with observed attributes</h1>
+
+      <p>
+        <time-formatted
+          id="timeElement"
+          hour="numeric"
+          minute="numeric"
+          second="numeric"
+        ></time-formatted>
+      </p>
+    </main>
+
+    <script>
+      setInterval(() => timeElement.setAttribute('datetime', new Date()), 1000);
+    </script>
+  </body>
+</html>
